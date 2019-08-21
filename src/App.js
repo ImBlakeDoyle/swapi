@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import DisplayFilms from "./components/DisplayFilms";
 import axios from "axios";
 
 
@@ -11,46 +12,44 @@ function App (){
         const fetchData = async () => {
             const response = await axios.get("https://swapi.co/api/films/")
             setFilms(response.data.results);
-            console.log(response.data.results);
-            console.log(favourited);
         };
         fetchData();
     }, []);
 
+    const favouriteAddHandler = (film, index) => {
+        setFavourited([...favourited, film]);
+        let updatedFilms = allFilms;
+        updatedFilms.splice(index, 1);
+        setFilms(updatedFilms);
+    }
+
     return(
         <div>
             <div>
-            {(!allFilms) ? <div>Loading...</div> : 
-                <ul>
-                    {allFilms.map((film, index) => {
-                        return(
-                            <div key={index}>
-                                <li>{film.title}</li> 
-                                <button onClick={() => {
-                                    setFavourited([...favourited, film]);
-                                    let updatedFilms = allFilms;
-                                    updatedFilms.splice(index, 1);
-                                    setFilms(updatedFilms);
-                                }}>Favourite</button>
-                            </div>
-                        );
-                    })}
-                </ul>
+            {(!favourited.length) ? <div>No current favourites</div> :
+                <div>
+                    <h2>Favourites</h2>
+                    <ul>
+                        {favourited.map((film, index) => {
+                            return(
+                                <div key={index}>
+                                    <li>{film.title}</li>
+                                </div>
+                            )
+                        })}
+                    </ul>
+                    <hr/>
+                </div>
             }
             </div>
             <div>
-            {(!favourited.length) ? <div>No favs</div> :
-                <ul>
-                    {favourited.map((film, index) => {
-                        return(
-                            <div key={index}>
-                                <li>{film.title}</li>
-                            </div>
-                        )
-                    })}
-                </ul>
-            }
+                {(!allFilms) ? <div>Loading...</div> :
+                    <DisplayFilms 
+                    films={allFilms} 
+                    addToFav={favouriteAddHandler}/>
+                }
             </div>
+            
         </div>
     );
 }
