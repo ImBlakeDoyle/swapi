@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import DisplayFilms from "./components/DisplayFilms";
+import DisplayFavs from "./components/DisplayFavs";
 import axios from "axios";
 
 
@@ -21,31 +22,30 @@ function App (){
         let updatedFilms = allFilms;
         updatedFilms.splice(index, 1);
         setFilms(updatedFilms);
+        console.log(allFilms);
+    }
+
+    const favouriteRemoveHandler = (film, index) => {
+        setFilms([...allFilms, film]);
+        let updatedFavourites = favourited;
+        updatedFavourites.splice(index, 1);
+        setFavourited(updatedFavourites);
     }
 
     return(
         <div>
+
             <div>
-            {(!favourited.length) ? <div>No current favourites</div> :
-                <div>
-                    <h2>Favourites</h2>
-                    <ul>
-                        {favourited.map((film, index) => {
-                            return(
-                                <div key={index}>
-                                    <li>{film.title}</li>
-                                </div>
-                            )
-                        })}
-                    </ul>
-                    <hr/>
-                </div>
-            }
+                {(favourited.length === 0) ? <div>No current favourites</div> :
+                    <DisplayFavs
+                    favFilms={favourited}
+                    removeFromFav={favouriteRemoveHandler} />
+                }
             </div>
             <div>
                 {(!allFilms) ? <div>Loading...</div> :
                     <DisplayFilms 
-                    films={allFilms} 
+                    regFilms={allFilms} 
                     addToFav={favouriteAddHandler}/>
                 }
             </div>

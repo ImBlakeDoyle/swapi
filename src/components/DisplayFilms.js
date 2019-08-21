@@ -1,10 +1,9 @@
 import React from "react";
 
 const displayFilms = (props) => {
-
     return(
         <ul>
-            {props.films.map((film, index) => {
+            {props.regFilms.map((film, index) => {
                 return(
                     <div key={index}>
                         <li>{film.title}</li> 
