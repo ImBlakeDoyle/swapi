@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from "react";
+import axios from "axios";
+
 import DisplayFilms from "./components/DisplayFilms";
 import DisplayFavs from "./components/DisplayFavs";
-import axios from "axios";
+import Notification from "./components/Notification";
 
 
 function App (){
 
     const [favourited, setFavourited] = useState([]);
     const [allFilms, setFilms] = useState([]);
+    const [notificationStatus, setNotificationStatus] = useState({
+        isActive: false,
+        message: "",
+        film: ""
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +29,7 @@ function App (){
         let updatedFilms = allFilms;
         updatedFilms.splice(index, 1);
         setFilms(updatedFilms);
-        console.log(allFilms);
+        setNotificationStatus({isActive: true, message: "added to", film: film.title});
     }
 
     const favouriteRemoveHandler = (film, index) => {
@@ -30,11 +37,20 @@ function App (){
         let updatedFavourites = favourited;
         updatedFavourites.splice(index, 1);
         setFavourited(updatedFavourites);
+        setNotificationStatus({isActive: true, message: "removed from", film: film.title});
     }
+
+    const toggleNotificationStatus = () => {
+        setNotificationStatus(false);
+    }
+
+    // const displayNotification = (film, status) => {
+    //     let message = `${film.title} has been ${status} favourites`;
+    //     console.log(message);
+    // }
 
     return(
         <div>
-
             <div>
                 {(favourited.length === 0) ? <div>No current favourites</div> :
                     <DisplayFavs
@@ -43,13 +59,23 @@ function App (){
                 }
             </div>
             <div>
-                {(!allFilms) ? <div>Loading...</div> :
+                {(allFilms.length === 0 && favourited.length === 0) ? <div>Loading...</div> :
                     <DisplayFilms 
                     regFilms={allFilms} 
                     addToFav={favouriteAddHandler}/>
                 }
             </div>
-            
+            <div>
+                {notificationStatus ? 
+                <Notification 
+                display={notificationStatus.isActive}
+                message={notificationStatus.message}
+                film={notificationStatus.film}
+                toggleNotification={toggleNotificationStatus} />
+                :
+                null
+                }
+            </div>
         </div>
     );
 }
