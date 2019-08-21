@@ -14,6 +14,7 @@ const displayFavs = (props) => {
                         );
                     })}
                 </ul>
+                <hr/>
         </div>
     );
 }
