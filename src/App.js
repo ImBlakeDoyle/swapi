@@ -18,7 +18,16 @@ function App (){
 
     return(
         <div>
-            {allFilms[0].title}
+            {(allFilms.length <= 1) ? <div>Loading...</div> : 
+            <ul>
+                {allFilms.map((film, index) => {
+                    return(
+                        <li key={index}>{film.title}</li>
+                    );
+                })}
+            </ul>
+ }
+            
         </div>
     );
 }
