@@ -4,7 +4,7 @@ import axios from "axios";
 import DisplayFilms from "./components/DisplayFilms";
 import DisplayFavs from "./components/DisplayFavs";
 import Notification from "./components/Notification";
-
+import ShowFilms from "./components/ShowFilms";
 
 function App (){
 
@@ -56,20 +56,11 @@ function App (){
     return(
         <div>
             <div>
-                {(films.favourited.length === 0) ? 
-                    <div>No current favourites</div> :
-                    <DisplayFavs
-                    favFilms={films.favourited}
-                    removeFromFav={favouriteRemoveHandler} />
-                }
-            </div>
-            <div>
-                {(films.allFilms.length === 0 && films.favourited.length === 0) ? 
-                    <div>Loading...</div> :
-                    <DisplayFilms 
-                    regFilms={films.allFilms} 
-                    addToFav={favouriteAddHandler}/>
-                }
+                <ShowFilms 
+                    films={films}
+                    addFav={favouriteAddHandler}
+                    removeFav={favouriteRemoveHandler}
+                />
             </div>
             <div>
                 {notificationStatus ? 
