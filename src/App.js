@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Notification from "./components/Notification";
 import ShowFilms from "./components/ShowFilms";
+import SearchBar from "./components/Searchbar";
 
 function App (){
 
@@ -62,6 +63,9 @@ function App (){
 
     return(
         <div>
+            <div>
+                <SearchBar/>
+            </div>
             <div>
                 <ShowFilms 
                     films={films}

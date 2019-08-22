@@ -5,7 +5,7 @@ const showFilms = (props) => {
     return(
         <div>
             <h2>Favourited</h2>
-            {props.films.favourited.length == 0 ?
+            {props.films.favourited.length === 0 ?
             <div>Click to add any to favourites!</div> :
             <ul>
                 {props.films.favourited.map((film, index) => {
