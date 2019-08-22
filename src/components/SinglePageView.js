@@ -1,13 +1,18 @@
 import React from "react";
+import SingleFilm from "./SingleFilm";
+import { Redirect, Link } from "react-router-dom";
 
 const singlePageView = (props) => {
-    console.log(props.match.params.id);
     console.log(props.location.query);
     return(
         <div>
             {props.location.query ?
-                <h2>{props.location.query.films.favourited[props.match.params.id].title}</h2> :
-                <h1>Not here</h1>
+                <div>
+                    <Link to ="/"><button>Home</button></Link>
+                    <SingleFilm film={props.location.query.film} />
+                </div>
+                :
+                <Redirect to="/" />
             }
         </div>
     );

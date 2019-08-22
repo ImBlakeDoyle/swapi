@@ -12,10 +12,11 @@ const showFilms = (props) => {
                     return(
                         <div key={index}>
                             <Link to={{
-                                pathname: `/film/${index}`,
+                                pathname: `/film/${film.title}`,
                                 query:{
-                                    films: props.films,
-                                    index: index
+                                    // films: props.films,
+                                    film: film,
+                                    // index: index
                                 }
                             }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.removeFav(film, index)}}>Remove</button>
