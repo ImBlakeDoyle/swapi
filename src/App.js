@@ -8,8 +8,11 @@ import Notification from "./components/Notification";
 
 function App (){
 
-    const [favourited, setFavourited] = useState([]);
-    const [allFilms, setFilms] = useState([]);
+    const [films, setMovies] = useState({
+        allFilms: [],
+        favourited: []
+    });
+
     const [notificationStatus, setNotificationStatus] = useState({
         isActive: false,
         message: "",
@@ -19,60 +22,62 @@ function App (){
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get("https://swapi.co/api/films/")
-            setFilms(response.data.results);
+            setMovies({...films, allFilms: response.data.results});
         };
         fetchData();
     }, []);
 
     const favouriteAddHandler = (film, index) => {
-        setFavourited([...favourited, film]);
-        let updatedFilms = allFilms;
+        let updatedFavs = films.favourited;
+        updatedFavs.push(film);
+        setMovies({...films, favourited: updatedFavs});
+
+        let updatedFilms = films.allFilms;
         updatedFilms.splice(index, 1);
-        setFilms(updatedFilms);
+        setMovies({...films, allFilms: updatedFilms});
         setNotificationStatus({isActive: true, message: "added to", film: film.title});
     }
 
     const favouriteRemoveHandler = (film, index) => {
-        setFilms([...allFilms, film]);
-        let updatedFavourites = favourited;
-        updatedFavourites.splice(index, 1);
-        setFavourited(updatedFavourites);
+        let updatedFilms = films.allFilms;
+        updatedFilms.push(film);
+        setMovies({...films, allFilms: updatedFilms});
+
+        let updatedFavs = films.favourited;
+        updatedFavs.splice(index, 1);
+        setMovies({...films, favourited: updatedFavs});
         setNotificationStatus({isActive: true, message: "removed from", film: film.title});
     }
 
-    const toggleNotificationStatus = () => {
+    const closeNotificationHandler = () => {
         setNotificationStatus(false);
     }
-
-    // const displayNotification = (film, status) => {
-    //     let message = `${film.title} has been ${status} favourites`;
-    //     console.log(message);
-    // }
 
     return(
         <div>
             <div>
-                {(favourited.length === 0) ? <div>No current favourites</div> :
+                {(films.favourited.length === 0) ? 
+                    <div>No current favourites</div> :
                     <DisplayFavs
-                    favFilms={favourited}
+                    favFilms={films.favourited}
                     removeFromFav={favouriteRemoveHandler} />
                 }
             </div>
             <div>
-                {(allFilms.length === 0 && favourited.length === 0) ? <div>Loading...</div> :
+                {(films.allFilms.length === 0 && films.favourited.length === 0) ? 
+                    <div>Loading...</div> :
                     <DisplayFilms 
-                    regFilms={allFilms} 
+                    regFilms={films.allFilms} 
                     addToFav={favouriteAddHandler}/>
                 }
             </div>
             <div>
                 {notificationStatus ? 
-                <Notification 
-                display={notificationStatus.isActive}
-                message={notificationStatus.message}
-                film={notificationStatus.film}
-                toggleNotification={toggleNotificationStatus} />
-                :
+                    <Notification 
+                    display={notificationStatus.isActive}
+                    message={notificationStatus.message}
+                    film={notificationStatus.film}
+                    toggleNotification={closeNotificationHandler}/> :
                 null
                 }
             </div>

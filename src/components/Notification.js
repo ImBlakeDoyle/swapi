@@ -9,7 +9,7 @@ const notification = (props) => {
             <p>{props.film} has been {props.message} favourites</p>
             <button onClick={() => props.toggleNotification()}>Close</button>
             </div> :
-            <p>No notification</p> 
+            null
             }
         </div>
     );
