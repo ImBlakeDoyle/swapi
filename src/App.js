@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
-import DisplayFilms from "./components/DisplayFilms";
-import DisplayFavs from "./components/DisplayFavs";
 import Notification from "./components/Notification";
 import ShowFilms from "./components/ShowFilms";
 
@@ -24,7 +22,12 @@ function App (){
             const response = await axios.get("https://swapi.co/api/films/")
             setMovies({...films, allFilms: response.data.results});
         };
+        const data = localStorage.getItem("films");
+        if (data){
+            setMovies(JSON.parse(data));
+        } else {
         fetchData();
+        }
     }, []);
 
     const favouriteAddHandler = (film, index) => {
@@ -36,6 +39,8 @@ function App (){
         updatedFilms.splice(index, 1);
         setMovies({...films, allFilms: updatedFilms});
         setNotificationStatus({isActive: true, message: "added to", film: film.title});
+
+        localStorage.setItem("films", JSON.stringify(films));
     }
 
     const favouriteRemoveHandler = (film, index) => {
@@ -47,6 +52,8 @@ function App (){
         updatedFavs.splice(index, 1);
         setMovies({...films, favourited: updatedFavs});
         setNotificationStatus({isActive: true, message: "removed from", film: film.title});
+
+        localStorage.setItem("films", JSON.stringify(films));
     }
 
     const closeNotificationHandler = () => {
