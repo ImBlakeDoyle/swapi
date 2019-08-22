@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const showFilms = (props) => {
     return(
@@ -10,7 +11,12 @@ const showFilms = (props) => {
                 {props.films.favourited.map((film, index) => {
                     return(
                         <div key={index}>
-                            <li>{film.title}</li> 
+                            <Link to={{
+                                pathname: `/film/${index}`,
+                                query:{
+                                    films: props.films
+                                }
+                            }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.removeFav(film, index)}}>Remove</button>
                         </div>
                     );
