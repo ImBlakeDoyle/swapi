@@ -14,7 +14,8 @@ const showFilms = (props) => {
                             <Link to={{
                                 pathname: `/film/${index}`,
                                 query:{
-                                    films: props.films
+                                    films: props.films,
+                                    index: index
                                 }
                             }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.removeFav(film, index)}}>Remove</button>
