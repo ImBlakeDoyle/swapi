@@ -1,16 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const showFilms = (props) => {
+const filmList = (props) => {
     return(
         <div>
             <h2>Favourited</h2>
-            {props.films.favourited.length == 0 ?
+            {props.films.favourited.length === 0 ?
             <div>Click to add any to favourites!</div> :
             <ul>
                 {props.films.favourited.map((film, index) => {
                     return(
                         <div key={index}>
-                            <li>{film.title}</li> 
+                            <Link to={{
+                                pathname: `/film/${film.title}`,
+                                query:{
+                                    film: film,
+                                }
+                            }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.removeFav(film, index)}}>Remove</button>
                         </div>
                     );
@@ -25,7 +31,12 @@ const showFilms = (props) => {
                 {props.films.allFilms.map((film, index) => {
                     return(
                         <div key={index}>
-                            <li>{film.title}</li> 
+                            <Link to={{
+                                pathname: `/film/${film.title}`,
+                                query:{
+                                    film: film,
+                                }
+                            }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.addFav(film, index)}}>Add</button>
                         </div>
                     );
@@ -36,4 +47,4 @@ const showFilms = (props) => {
     );
 }
 
-export default showFilms;
+export default filmList;

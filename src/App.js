@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 import Notification from "./components/Notification";
-import ShowFilms from "./components/ShowFilms";
+import FilmList from "./components/FilmList";
+import SearchBar from "./components/Searchbar";
 
 function App (){
 
@@ -63,7 +64,10 @@ function App (){
     return(
         <div>
             <div>
-                <ShowFilms 
+                <SearchBar/>
+            </div>
+            <div>
+                <FilmList 
                     films={films}
                     addFav={favouriteAddHandler}
                     removeFav={favouriteRemoveHandler}
