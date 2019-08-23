@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const showFilms = (props) => {
+const filmList = (props) => {
     return(
         <div>
             <h2>Favourited</h2>
@@ -14,9 +14,7 @@ const showFilms = (props) => {
                             <Link to={{
                                 pathname: `/film/${film.title}`,
                                 query:{
-                                    // films: props.films,
                                     film: film,
-                                    // index: index
                                 }
                             }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.removeFav(film, index)}}>Remove</button>
@@ -33,7 +31,12 @@ const showFilms = (props) => {
                 {props.films.allFilms.map((film, index) => {
                     return(
                         <div key={index}>
-                            <li>{film.title}</li> 
+                            <Link to={{
+                                pathname: `/film/${film.title}`,
+                                query:{
+                                    film: film,
+                                }
+                            }}><li>{film.title}</li></Link>
                             <button onClick={() => {props.addFav(film, index)}}>Add</button>
                         </div>
                     );
@@ -44,4 +47,4 @@ const showFilms = (props) => {
     );
 }
 
-export default showFilms;
+export default filmList;
