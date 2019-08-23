@@ -1,7 +1,8 @@
 import React from "react";
 import Moment from 'react-moment';
 
-import CharacterList from "./CharacterList";
+// import CharacterList from "./CharacterList";
+import Test from "./Test";
 
 const singleFilm = (props) => {
     const { film } = props;
@@ -12,7 +13,8 @@ const singleFilm = (props) => {
             <h3>Episode {film.episode_id}</h3>
             <div>Created: <Moment format="DD/MM/YYYY">{film.created}</Moment> </div>
             <p><i>{film.opening_crawl}</i></p>
-            <CharacterList characters={film.characters} />
+            
+            <Test characters={film.characters} />
         </div>
     );
 }
