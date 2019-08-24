@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import SingleCharacter from "./SingleCharacter";
+
+// import ToolTip from "./ToolTip";
+
 function CharacterList({ characters }) {
 
     const [allCharacters, setCharacters] = useState([{}]);
     const [loading, setLoading] = useState(true);
-    const [isHovering, setHovering] = useState(false);
 
     useEffect(() => { 
         const fetchData = async () => {
@@ -25,34 +28,21 @@ function CharacterList({ characters }) {
         }
     }, [allCharacters]);
 
-    const mouseOverHandler = () => {
-        setHovering(true);
-    }
-
-    const mouseOutHandler = () => {
-        setHovering(false);
-    }
-
-
     return(
         <div>
             <div>
-            {
-                !loading ? 
-                <div 
-                onMouseOver={mouseOverHandler}
-                onMouseLeave={mouseOutHandler}
-                >{allCharacters[0].name}</div> :
-                <div>Loading...</div>
+            { !loading ? 
+                allCharacters.map((char, index) => {
+                    return(
+                        <div key={index}>
+                            <SingleCharacter character={char}/>
+                        </div>  
+                    );
+                }) :
+                <div>Loading characters...</div>
             }
             </div>
             <div>
-                {
-                    isHovering ?
-                    <div>{allCharacters[0].height}</div> :
-                    <div>Not hovering</div>
-
-                }
             </div>
         </div>
     );

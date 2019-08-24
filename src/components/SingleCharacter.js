@@ -1,10 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 
-const singleCharacter = async (props) => {
+import ToolTip from "./ToolTip";
+
+const SingleCharacter = (props) => {
+    const { character } = props;
+
+    const [isHovering, setHover] = useState(false);
+
+    const mouseHandler = () => {
+        setHover(!isHovering);
+    }
 
     return(
-        <div>{props.characters[0].name}</div>
+        <div>
+            <div 
+            onMouseOver={mouseHandler}
+            onMouseLeave={mouseHandler}>
+            {character.name}
+            </div>
+            <div>
+                {isHovering ? 
+                <ToolTip character={character} /> :
+                null}
+            </div>
+        </div>
     );
 }
 
-export default singleCharacter;
+export default SingleCharacter;
