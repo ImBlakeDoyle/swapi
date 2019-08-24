@@ -1,42 +1,61 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import SingleCharacter from "./SingleCharacter";
+function CharacterList({ characters }) {
 
+    const [allCharacters, setCharacters] = useState([{}]);
+    const [loading, setLoading] = useState(true);
+    const [isHovering, setHovering] = useState(false);
 
-
-class CharacterList extends Component {
-    state = {
-        characterList: []
-    }
-
-    async componentDidMount(){
-    const characters = this.props.characters;
-    const newList = []
-        for (let i = 0; i < characters.length; i++){
-            let response = await axios.get(characters[i]);
-            newList.push(response.data); 
-            this.setState({characterList: newList});   
+    useEffect(() => { 
+        const fetchData = async () => {
+            const newList = [];
+            for (let i = 0; i < characters.length; i++){
+            const response = await axios.get(characters[i]);
+            newList.push(response.data);
+            }
+            setLoading(false);
+            setCharacters(newList);
+        };
+        if (loading) {
+        fetchData();
         }
+        else {
+            return;
+        }
+    }, [allCharacters]);
+
+    const mouseOverHandler = () => {
+        setHovering(true);
     }
 
-    render(){
-        const {characters} = this.props;
-        const {characterList} = this.state
-        // console.log(characters);
-
-        return(
-            <div>{
-                characterList.length !==characters.length ?
-                <div>Loading characters...</div> :
-                characterList.map((char, index) => {
-                    return(
-                        <div key={index}>{char.name}</div>
-                    );
-                })
-            }</div>
-        );
+    const mouseOutHandler = () => {
+        setHovering(false);
     }
+
+
+    return(
+        <div>
+            <div>
+            {
+                !loading ? 
+                <div 
+                onMouseOver={mouseOverHandler}
+                onMouseLeave={mouseOutHandler}
+                >{allCharacters[0].name}</div> :
+                <div>Loading...</div>
+            }
+            </div>
+            <div>
+                {
+                    isHovering ?
+                    <div>{allCharacters[0].height}</div> :
+                    <div>Not hovering</div>
+
+                }
+            </div>
+        </div>
+    );
 }
 
 export default CharacterList;
