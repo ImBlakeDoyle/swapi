@@ -13,7 +13,9 @@ const singleFilm = (props) => {
             <div>Created: <Moment format="DD/MM/YYYY">{film.created}</Moment> </div>
             <p><i>{film.opening_crawl}</i></p>
             
-            <CharacterList characters={film.characters} />
+            <CharacterList characters={film.characters} type="people"/>
+            <CharacterList characters={film.starships} type="starships"/>
+            <CharacterList characters={film.vehicles} type="vehicles"/>
         </div>
     );
 }

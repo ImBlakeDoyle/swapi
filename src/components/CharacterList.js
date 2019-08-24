@@ -5,7 +5,9 @@ import SingleCharacter from "./SingleCharacter";
 
 // import ToolTip from "./ToolTip";
 
-function CharacterList({ characters }) {
+function CharacterList(props) {
+
+    const { characters, type } = props;
 
     const [allCharacters, setCharacters] = useState([{}]);
     const [loading, setLoading] = useState(true);
@@ -16,6 +18,7 @@ function CharacterList({ characters }) {
             for (let i = 0; i < characters.length; i++){
             const response = await axios.get(characters[i]);
             newList.push(response.data);
+            console.log("Character fetched!");
             }
             setLoading(false);
             setCharacters(newList);
@@ -35,7 +38,7 @@ function CharacterList({ characters }) {
                 allCharacters.map((char, index) => {
                     return(
                         <div key={index}>
-                            <SingleCharacter character={char}/>
+                            <SingleCharacter character={char} type={type}/>
                         </div>  
                     );
                 }) :

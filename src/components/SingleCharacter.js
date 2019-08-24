@@ -1,11 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import ToolTip from "./ToolTip";
 
 const SingleCharacter = (props) => {
-    const { character } = props;
+    const { character, type } = props;
 
     const [isHovering, setHover] = useState(false);
+
+    useEffect(() => {
+        console.log(`TYPE IS ${type}`);
+    }, [])
 
     const mouseHandler = () => {
         setHover(!isHovering);
@@ -20,7 +24,7 @@ const SingleCharacter = (props) => {
             </div>
             <div>
                 {isHovering ? 
-                <ToolTip character={character} /> :
+                <ToolTip character={character} type={type}/> :
                 null}
             </div>
         </div>
