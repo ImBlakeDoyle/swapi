@@ -5,19 +5,18 @@ const toolTip = (props) => {
 
     return(
         <div>
-            {type !== "vehicles" && type !== "starships" ?
-                <div>
-                    <div>Birth: {character.birth_year}</div>
-                    <div>Height: {character.height}cm</div>
-                    <div>Weight: {character.mass}kg</div>
-                    <div>Eye colour: {character.eye_color}</div>
-                    <div>Skin colour: {character.skin_color}</div>
-                </div> :
-            type !== "people" && type !== "starships" ?
-                <div>
-                    <div>Vehicle</div>
-                </div> :
-                    <div>Spaceship</div>}
+            {type === "people" ?
+            <div className="tool-tip">PEOPLE</div> :
+            type === "vehicles" ?
+            <div className="tool-tip">VEHICLE</div> :
+            type==="starships" ?
+            <div className="tool-tip">Starships</div> :
+            type==="planets" ?
+            <div className="tool-tip">PLANET</div> :
+            type==="species" ?
+            <div className="tool-tip">SPECIES</div> :
+            null
+            }
         </div>
     );
 }

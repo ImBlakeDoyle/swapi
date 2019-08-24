@@ -32,21 +32,17 @@ function CharacterList(props) {
     }, [allCharacters]);
 
     return(
-        <div>
-            <div>
+        <div className="flex-test">
             { !loading ? 
                 allCharacters.map((char, index) => {
                     return(
-                        <div key={index}>
+                        <span key={index} className="inline">
                             <SingleCharacter character={char} type={type}/>
-                        </div>  
+                        </span>  
                     );
                 }) :
                 <div>Loading characters...</div>
             }
-            </div>
-            <div>
-            </div>
         </div>
     );
 }

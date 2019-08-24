@@ -11,23 +11,27 @@ const SingleCharacter = (props) => {
         console.log(`TYPE IS ${type}`);
     }, [])
 
-    const mouseHandler = () => {
-        setHover(!isHovering);
+    const mouseEnterHandler = () => {
+        setHover(true);
+    }
+    const mouseLeaveHandler = () => {
+        setHover(false);
     }
 
+
     return(
-        <div>
-            <div 
-            onMouseOver={mouseHandler}
-            onMouseLeave={mouseHandler}>
+        <span className="line-test">
+            <span className="list-item"
+            onMouseEnter={mouseEnterHandler}
+            onMouseLeave={mouseLeaveHandler}>
             {character.name}
-            </div>
+            </span>
             <div>
                 {isHovering ? 
                 <ToolTip character={character} type={type}/> :
                 null}
             </div>
-        </div>
+        </span>
     );
 }
 
