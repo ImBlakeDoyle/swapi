@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function SearchBar(){
+function SearchBar(props){
 
     const [allFilms, grabFilms] = useState();
     const [query, setQuery] = useState({

@@ -4,7 +4,7 @@ import "./App.css";
 
 import Notification from "./components/Notification";
 import FilmList from "./components/FilmList";
-import SearchBar from "./components/Searchbar";
+// import SearchBar from "./components/Searchbar";
 
 function App (){
 
@@ -72,9 +72,6 @@ function App (){
 
     return(
         <div>
-            <div>
-                <SearchBar/>
-            </div>
             <div>
                 <FilmList 
                     films={films}
