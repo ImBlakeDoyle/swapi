@@ -1,42 +1,50 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import SingleCharacter from "./SingleCharacter";
 
+// import ToolTip from "./ToolTip";
 
+function CharacterList(props) {
 
-class CharacterList extends Component {
-    state = {
-        characterList: []
-    }
+    const { characters, type } = props;
 
-    async componentDidMount(){
-    const characters = this.props.characters;
-    const newList = []
-        for (let i = 0; i < characters.length; i++){
-            let response = await axios.get(characters[i]);
-            newList.push(response.data); 
-            this.setState({characterList: newList});   
+    const [allCharacters, setCharacters] = useState([{}]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => { 
+        const fetchData = async () => {
+            const newList = [];
+            for (let i = 0; i < characters.length; i++){
+            const response = await axios.get(characters[i]);
+            newList.push(response.data);
+            console.log("Character fetched!");
+            }
+            setLoading(false);
+            setCharacters(newList);
+        };
+        if (loading) {
+        fetchData();
         }
-    }
+        else {
+            return;
+        }
+    }, [allCharacters]);
 
-    render(){
-        const {characters} = this.props;
-        const {characterList} = this.state
-        // console.log(characters);
-
-        return(
-            <div>{
-                characterList.length !==characters.length ?
-                <div>Loading characters...</div> :
-                characterList.map((char, index) => {
+    return(
+        <div>
+            { !loading ? 
+                allCharacters.map((char, index) => {
                     return(
-                        <div key={index}>{char.name}</div>
+                        <span key={index}>
+                            <SingleCharacter character={char} type={type}/>
+                        </span>  
                     );
-                })
-            }</div>
-        );
-    }
+                }) :
+                <div>Loading characters...</div>
+            }
+        </div>
+    );
 }
 
 export default CharacterList;

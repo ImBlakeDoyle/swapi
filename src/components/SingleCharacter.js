@@ -1,10 +1,39 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-const singleCharacter = async (props) => {
+import ToolTip from "./ToolTip";
+
+const SingleCharacter = (props) => {
+    const { character, type } = props;
+
+    const [isHovering, setHover] = useState(false);
+
+    useEffect(() => {
+        console.log(`TYPE IS ${type}`);
+    }, [])
+
+    const mouseEnterHandler = () => {
+        setHover(true);
+    }
+    const mouseLeaveHandler = () => {
+        setHover(false);
+    }
+
 
     return(
-        <div>{props.characters[0].name}</div>
+        <span className="dropdown">
+            <span
+            className="dropbtn"
+            onMouseEnter={mouseEnterHandler}
+            onMouseLeave={mouseLeaveHandler}>
+            {character.name}
+            </span>
+            <div>
+                {isHovering ? 
+                <ToolTip character={character} type={type}/> :
+                null}
+            </div>
+        </span>
     );
 }
 
-export default singleCharacter;
+export default SingleCharacter;
