@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function SearchBar(props){
+function SearchBar(){
 
     const [allFilms, grabFilms] = useState();
     const [query, setQuery] = useState({
@@ -18,7 +18,6 @@ function SearchBar(props){
     }, []);
 
     useEffect(() => {
-        // console.log(query.text);
     }, [query.text])
 
     const handleInputChange = (event) => {
@@ -26,21 +25,21 @@ function SearchBar(props){
         setQuery({...query, text: theQuery});
 
         setQuery({...query, text:theQuery, filteredData: allFilms.allFilms.filter(e =>
-                {return (e.title.toLowerCase().includes(theQuery));
+                {
+                    return (e.title.toLowerCase().includes(theQuery));
                 }
-            )})
-        // console.log(query.filteredData);
+            )});
     }
 
     return(
         <div>
-            <h2>Search</h2>
             <input
                 type="text"
                 placeholder="search"
                 value={query.text}
                 onChange={(e) => handleInputChange(e)}
             />
+            
             {query.filteredData.length > 0  && query.text.length > 1 ?
             <div className="search-container"> 
                 <ul>
@@ -51,7 +50,7 @@ function SearchBar(props){
                     })}
                 </ul> 
             </div>:
-            <div>Nothing filtered</div>
+            null
             }
         </div>
     );
