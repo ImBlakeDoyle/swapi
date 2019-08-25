@@ -20,8 +20,9 @@ const SingleCharacter = (props) => {
 
 
     return(
-        <span className="line-test">
-            <span className="list-item"
+        <span className="dropdown">
+            <span
+            className="dropbtn"
             onMouseEnter={mouseEnterHandler}
             onMouseLeave={mouseLeaveHandler}>
             {character.name}
