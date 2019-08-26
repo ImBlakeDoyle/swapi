@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import BarSearch from "./BarSearch";
+import SearchBar from "./SearchBar";
 
 import { Link } from "react-router-dom";
 
 function FilmList(props){
 
+    //State used in searchbar component
     const [query, setQuery] = useState({
         text: "",
         filteredData: []
     })
 
+    //Hanlder for returning filtered list of films in searchbar component by comparing with
+    //the list of all the films
     const handleInputChange = (event) => {
         const theQuery = event.target.value;
         setQuery({...query, text: theQuery});
@@ -21,20 +24,21 @@ function FilmList(props){
             )});
     }
 
-
+    //Check if there is filtered data in the search component and rendering such.
+    //If searchbar is not being used or if there are no films that match the searchbar value
+    //then display all films
     return(
         <div>
-            <BarSearch 
+            <SearchBar
             handleChange={handleInputChange}
             query={query}/>
-            <hr/>
 
             {query.filteredData.length > 0  && query.text.length > 1 ?
-                <ul>
+                <ul className="film-title-list">
                     {query.filteredData.map((film, index) => {
                         if (film.favourite === true){
                             return(
-                                <div key={index}>
+                                <div key={index} className="film-title">
                                     <Link to={{
                                         pathname: `/film/${film.title}`,
                                         query:{
@@ -46,7 +50,7 @@ function FilmList(props){
                             );
                         } else {
                             return(
-                                <div key={index}>
+                                <div key={index} className="film-title">
                                     <Link to={{
                                         pathname: `/film/${film.title}`,
                                         query:{
@@ -59,11 +63,11 @@ function FilmList(props){
                         }
                     })} 
                 </ul> :
-                <ul>
+                <ul className="film-title-list">
                     {props.films.allFilms.map((film, index) => {
                         if (film.favourite === true){
                             return(
-                                <div key={index}>
+                                <div key={index} className="film-title">
                                     <Link to={{
                                         pathname: `/film/${film.title}`,
                                         query:{
@@ -75,7 +79,7 @@ function FilmList(props){
                             );
                         } else {
                             return(
-                                <div key={index}>
+                                <div key={index} className="film-title">
                                     <Link to={{
                                         pathname: `/film/${film.title}`,
                                         query:{
