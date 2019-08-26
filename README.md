@@ -1,68 +1,32 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SWAPI
 
-## Available Scripts
+### Overall Goal
+To consumer the Star Wars API using react, fetch data and render to the screen.
 
-In the project directory, you can run:
+### Why I used hooks
+As a relatively new concept to the react.js world, I decided to utilise hooks for this coding challenge as opposed to class based components and/or redux.
+The reason I chose to do so was mostly to challenge myself. Prior to this task, I have only used hooks once, so I assumed only using hooks and functional components would be a little more difficult than other methods I was comfortable with, yet I understand being more comfortable with this new-ish concept would be more valuable than going with what I was already comfortable with.
 
-### `npm start`
+### Process
+1. Write up a list of coding requirements to fulfill the coding goal.
+2. I began on the index page, working with hooks to grab the film data and set it to the state. Add conditional rendering to display a loading message until the data was fetched.
+3. Push favourite films to separate state array (later changed).
+4. Create notification for when films are favourited/unfavourited.
+5. Save and load data with localStorage.
+6. Pass a particular film to a single page view.
+7. Create searchbar to filter movies.
+8. Create re-usable component to display text on hover
+9. Layout rendered elements on single film page
+10. Refactor how favourite films are saved in state and alter searchbar component to work accordingly
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Challenges
+#### Asynchronous useEffect hook
+As I came to discover, useEffect is not initially friendly when it comes to running asynchronous functions. You cannot call useEffect asynchronously, but instead can create an asynchronous function inside the hook and can then call that asynchronous function immediately within useEffect.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+#### Setting state with useState
+In multiple instances I had trouble setting the state with the useState hook as it would not always update the state immediately, resulting in incorrect/delayed values being stored in state. The work around this was to add a boolean loading state which would set to true when fetching data, then once the data was fetched, it would set it to false. The state would be updated only when the loading state was set to false.
 
-### `npm test`
+#### Searchbar working in conjunction with favourited list
+Initially, I saved all the films that are fetched on the home page to a single array in state. Once a film was favourited, I would remove that film from the array and add it to a different array where the favourite films were stored. This made it difficult for the searchbar component to work with. In the end, I realised it would be best to simply append a new key/value to each film (favourite: false) and switch it to true once a film was favourited. This also made the searchbar a lot more effective as it was then working with just 1 array instead of 2.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

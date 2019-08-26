@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./App.css";
 
-import Notification from "./components/Notification";
-import FilmList from "./components/FilmList";
-// import SearchBar from "./components/Searchbar";
+import Notification from "./IndexComponents/Notification";
+import FilmList from "./IndexComponents/FilmList";
 
 function App (){
 
-    const [films, setMovies] = useState({
+    const [films, setFilms] = useState({
         allFilms: []
     });
 
@@ -18,6 +17,7 @@ function App (){
         film: ""
     });
 
+    //Fetch film data from api if not previously saved in localstorage
     useEffect(() => {
         const fetchData = async () => {
             console.log("fetching");
@@ -27,17 +27,18 @@ function App (){
                 return {...film, favourite: false};
             });
 
-            setMovies({...films, allFilms: updated});
+            setFilms({...films, allFilms: updated});
             localStorage.setItem("films", JSON.stringify(films));
         };
         const data = localStorage.getItem("films");
         if (data){
-            setMovies(JSON.parse(data));
+            setFilms(JSON.parse(data));
         } else {
         fetchData();
         }
     }, []);
 
+    //Handler to add film as a favourite
     const favouriteAddHandler = (film, index) => {
         let updatedFilm = film;
         let newAllFilms = films.allFilms
@@ -47,11 +48,12 @@ function App (){
         updatedFilm.favourite = true;
         newAllFilms.unshift(updatedFilm);
         
-        setMovies({...films, allFilms: newAllFilms});
+        setFilms({...films, allFilms: newAllFilms});
         setNotificationStatus({isActive: true, message: "added to", film: film.title});
         localStorage.setItem("films", JSON.stringify(films));
     }
 
+    //Handler to remove film as a favourite
     const favouriteRemoveHandler = (film, index) => {
         let updatedFilm = film;
         let newAllFilms = films.allFilms
@@ -61,25 +63,28 @@ function App (){
         updatedFilm.favourite = false;
         newAllFilms.push(updatedFilm);
         
-        setMovies({...films, allFilms: newAllFilms});
+        setFilms({...films, allFilms: newAllFilms});
         setNotificationStatus({isActive: true, message: "removed from", film: film.title});
         localStorage.setItem("films", JSON.stringify(films));
     }
 
+    //Handler to close the notification message when a film is favourite/unfavourited
     const closeNotificationHandler = () => {
         setNotificationStatus(false);
     }
 
     return(
-        <div>
-            <div>
+        <div className="container">
+            <h1 className="title">SWAPI</h1>
+            <hr/>
+            <div className="film-list-center">
                 <FilmList 
                     films={films}
                     addFav={favouriteAddHandler}
                     removeFav={favouriteRemoveHandler}
                 />
             </div>
-            <div>
+            <div className="film-list-center">
                 {notificationStatus ? 
                     <Notification 
                     display={notificationStatus.isActive}
