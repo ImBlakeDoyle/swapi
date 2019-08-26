@@ -29,4 +29,10 @@ In multiple instances I had trouble setting the state with the useState hook as 
 #### Searchbar working in conjunction with favourited list
 Initially, I saved all the films that are fetched on the home page to a single array in state. Once a film was favourited, I would remove that film from the array and add it to a different array where the favourite films were stored. This made it difficult for the searchbar component to work with. In the end, I realised it would be best to simply append a new key/value to each film (favourite: false) and switch it to true once a film was favourited. This also made the searchbar a lot more effective as it was then working with just 1 array instead of 2.
 
+#### Working with SWAPI
+The API itself seems to be quite temperamental. Sometimes data would be fetched almost immediately, other times it could take up to a minute.
+
+### Further improvements/additions
+Although code was refactored and is much cleaner than it initially was, I know I could further refactor components such as the tooltip to allow it to work much more dynamically.
+
 
