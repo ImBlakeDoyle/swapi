@@ -18,23 +18,23 @@ const singleFilm = (props) => {
             <p><i>{film.opening_crawl}</i></p>
             
             <h3>People</h3>
-            <CategoryList category={film.characters} type="people"/>
+            <CategoryList title={film.episode_id} category={film.characters} type="people"/>
             <hr/>
 
             <h3>Starships</h3>
-            <CategoryList category={film.starships} type="starships"/>
+            <CategoryList title={film.episode_id} category={film.starships} type="starships"/>
             <hr/>
 
             <h3>Vehicles</h3>
-            <CategoryList category={film.vehicles} type="vehicles"/>
+            <CategoryList title={film.episode_id} category={film.vehicles} type="vehicles"/>
             <hr/>
 
             <h3>Planets</h3>
-            <CategoryList category={film.planets} type="planets"/>
+            <CategoryList title={film.episode_id} category={film.planets} type="planets"/>
             <hr/>
 
             <h3 className="species">Species</h3>
-            <CategoryList category={film.species} type="species" />
+            <CategoryList title={film.episode_id} category={film.species} type="species" />
             <hr/>
         </div>
     );
