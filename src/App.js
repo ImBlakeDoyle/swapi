@@ -37,6 +37,10 @@ function App (){
         }
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem("films", JSON.stringify(films));
+    }, [films.allFilms])
+
     //Handler to add film as a favourite
     const favouriteAddHandler = (film, index) => {
         let updatedFilm = film;
