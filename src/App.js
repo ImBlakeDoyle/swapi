@@ -28,7 +28,6 @@ function App (){
             });
 
             setFilms({...films, allFilms: updated});
-            localStorage.setItem("films", JSON.stringify(films));
         };
         const data = localStorage.getItem("films");
         if (data){
@@ -77,13 +76,16 @@ function App (){
         <div className="container">
             <h1 className="title">SWAPI</h1>
             <hr/>
-            <div className="film-list-center">
-                <FilmList 
-                    films={films}
-                    addFav={favouriteAddHandler}
-                    removeFav={favouriteRemoveHandler}
-                />
-            </div>
+            {films.allFilms.length === 0 ?
+                <div>Loading...</div> :
+                <div className="film-list-center">
+                    <FilmList 
+                        films={films}
+                        addFav={favouriteAddHandler}
+                        removeFav={favouriteRemoveHandler}
+                    />
+                </div>
+            }
             <div className="film-list-center">
                 {notificationStatus ? 
                     <Notification 
